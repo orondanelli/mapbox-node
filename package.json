@@ -1,0 +1,23 @@
+{
+  "name": "mapbox-node",
+  "version": "1.0.0",
+  "description": "mapbox map with trail paths chile",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orondanelli/mapbox-node.git"
+  },
+  "keywords": [
+    "mapbox",
+    "map"
+  ],
+  "author": "Orlando Rondanelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/orondanelli/mapbox-node/issues"
+  },
+  "homepage": "https://github.com/orondanelli/mapbox-node#readme"
+}

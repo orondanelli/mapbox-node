@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/orondanelli/mapbox-node/issues"
   },
-  "homepage": "https://github.com/orondanelli/mapbox-node#readme"
+  "homepage": "https://github.com/orondanelli/mapbox-node#readme",
+  "dependencies": {
+    "mapbox": "^1.0.0-beta9"
+  }
 }

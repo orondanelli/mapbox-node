@@ -1,11 +1,114 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+	<head>
+		<meta charset='utf-8' />
+		<title>Display a map</title>
+		<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
+		<style>
+		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+
+        		body { margin:0; padding:0; }
+	        	#map { position:absolute; top:0; bottom:0; width:100%; }
+				.marker {
+					background-size: cover;
+					width: 50px;
+					height: 50px;
+					border-radius: 50%;
+					cursor: pointer;
+				}
+		</style>
+	</head>
+<body>
+	<div id='map'></div>
+		<script>
+			mapboxgl.accessToken = 'pk.eyJ1Ijoib3JvbmRhbmVsbGkiLCJhIjoiY2pkeDMzMDczNGJzOTJxbzQ1ejhsZWFyeSJ9.2-l7A3N0LBXVTR1tjUc73g';
+			var map = L.mapbox.Map({
+    				container: 
+				'map', // container id
+	        		style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
+				center: [-70.51690075037477,-33.43075322966565], // starting position [lng, lat]
+				zoom: 14 // starting zoom
+				});
+			
+			var geojson = {
+				type: 'FeatureCollection',
+				features: [{
+					type: 'Feature',
+					geometry: {	
+						type: 'Point',
+						coordinates: [-70.51690075037477,-33.43075322966565]
+					},
+					properties: {
+						title: 'Mapbox',
+						description: 'Washington, D.C.',
+						icon: {
+							className: 'fa-angular', // class name to style
+							html: '<i class="fab fa-angular"></i>'// add content inside the marker, in this case a star
+						},
+						iconSize: [50, 50]
+					}
+				},
+				{
+					type: 'Feature',
+					geometry: {
+						type: 'Point',
+						coordinates: [-70.520185,-33.433948]
+					},
+					properties: {
+					title: 'Mapbox',
+					description: 'San Francisco, California',
+					icon: {
+							className: 'fa-angular', // class name to style
+							html: '<i class="fab fa-angular"></i>'// add content inside the marker, in this case a star
+					},
+					iconSize: [20, 20]
+				}
+				}]
+			};
+			
+			map.on('load', function () {
+			map.addLayer({
+					"id": "route",
+					"type": "line",
+					"source": {
+						"type": "geojson",
+						data: '/geojson/SanRamon_Tracks.geojson'
+					},
+					"layout": {
+						"line-join": "round",
+						"line-cap": "round"
+					},
+					"paint": {
+						"line-color": "#FF5900",
+						"line-width": 3
+					}
+				});
+			});
+			
+			// add markers to map
+			geojson.features.forEach(function(marker) {
+
+			// create a HTML element for each feature
+			var el = document.createElement('div');
+			el.className = 'fa-angular';
+			el.style.width = marker.properties.iconSize[0] + 'px';
+			el.style.height = marker.properties.iconSize[1] + 'px';
+			
+			// make a marker for each feature and add to the map
+			marker.setIcon(L.divIcon({
+			className: 'count-icon-emergency',
+			html: '<i class="fa fa-check"></i>',
+			iconSize: [40, 40]
+			}));
+			new mapboxgl.Marker(el)
+			.setLngLat(marker.geometry.coordinates)
+			.addTo(map);
+});
+
+		</script>
+</body>
 </html>
+
